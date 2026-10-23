@@ -42,4 +42,19 @@ class Tree {
 	includes(value) {
 		return this.#findNode(value) !== null;
 	}
+
+	insert(value, node = this.root) {
+		if (this.root === null) {
+			this.root = new Node(value);
+			return;
+		}
+
+		if (value === node.data) return;
+
+		if (value < node.data) {
+			if (node.left === null) {
+				node.left = new Node(value);
+			}
+		}
+	}
 }
