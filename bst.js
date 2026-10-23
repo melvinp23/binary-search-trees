@@ -66,7 +66,7 @@ class Tree {
 		}
 	}
 
-	deleteItem(value) {
+	deleteItem(value, node = this.root) {
 		const deleteNode = (currentNode, val) => {
 			if (currentNode === null) return null;
 
@@ -91,7 +91,7 @@ class Tree {
 			return currentNode;
 		};
 
-		this.root = deleteNode(this.root, value);
+		node = deleteNode(this.root, value);
 	}
 
 	levelOrderForEach(callback) {
@@ -134,5 +134,17 @@ class Tree {
 		callback(node.data);
 		this.inOrderForEach(callback, node.left);
 		this.inOrderForEach(callback, node.right);
+	}
+
+	postOrderForEach(callback, node = this.root) {
+		if (typeof callback !== 'function') {
+			throw new Error('Callback function is required');
+		}
+
+		if (node === null) return;
+
+		this.inOrderForEach(callback, node.left);
+		this.inOrderForEach(callback, node.right);
+		callback(node.data);
 	}
 }
