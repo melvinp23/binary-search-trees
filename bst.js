@@ -27,4 +27,19 @@ class Tree {
 
 		return recursiveBuild(sortedUniqueArray, 0, sortedUniqueArray.length - 1);
 	}
+
+	#findNode(value, node = this.root) {
+		if (node === null) return null;
+		if (node.data === value) return node;
+
+		if (value < node.data) {
+			return this.#findNode(value, node.left);
+		} else {
+			return this.#findNode(value, node.right);
+		}
+	}
+
+	includes(value) {
+		return this.#findNode(value) !== null;
+	}
 }
