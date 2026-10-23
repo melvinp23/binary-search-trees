@@ -147,4 +147,18 @@ class Tree {
 		this.inOrderForEach(callback, node.right);
 		callback(node.data);
 	}
+
+	height(value) {
+		const targetNode = this.#findNode(value);
+		if (!targetNode) return undefined;
+
+		const getHeight = node => {
+			if (node === null) return -1;
+			const leftHeight = getHeight(node.left);
+			const rightHeight = getHeight(node.right);
+			return Math.max(leftHeight, rightHeight) + 1;
+		};
+
+		return getHeight(targetNode);
+	}
 }
