@@ -5,3 +5,26 @@ class Node {
 		this.right = null;
 	}
 }
+
+class Tree {
+	constructor(array) {
+		this.root = this.#buildTree(array);
+	}
+
+	#buildTree(array) {
+		const sortedUniqueArray = Array.from(new Set(array)).sort((a, b) => a - b);
+		const recursiveBuild = (arr, start, end) => {
+			if (start > end) return null;
+
+			const mid = Math.floor((start + end) / 2);
+			const node = new Node(arr[mid]);
+
+			node.left = recursiveBuild(arr, start, mid - 1);
+			node.right = recursiveBuild(arr, mid + 1, end);
+
+			return node;
+		};
+
+		return recursiveBuild(sortedUniqueArray, 0, sortedUniqueArray.length - 1);
+	}
+}
