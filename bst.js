@@ -54,7 +54,43 @@ class Tree {
 		if (value < node.data) {
 			if (node.left === null) {
 				node.left = new Node(value);
+			} else {
+				this.insert(value, node.left);
+			}
+		} else {
+			if (node.right === null) {
+				node.right = new Node(value);
+			} else {
+				this.insert(value, node.right);
 			}
 		}
+	}
+
+	deleteItem(value, node = this.root) {
+		const deleteNode = (currentNode, val) => {
+			if (currentNode === null) return null;
+
+			if (val < currentNode.data) {
+				currentNode.left = deleteNode(currentNode.left, val);
+			} else if (val > currentNode.data) {
+				currentNode.right = deleteNode(currentNode.right, val);
+			} else {
+				if (currentNode.left === null) return currentNode.right;
+				if (currentNode.right === null) return currentNode.left;
+
+				let successor = currentNode.right;
+				while (successor.left !== null) {
+					successor = successor.left;
+				}
+
+				currentNode.data = successor.data;
+
+				currentNode.right = deleteNode(currentNode.right, successor.data);
+			}
+
+			return currentNode;
+		};
+
+		this.root = deleteNode(this.root, value);
 	}
 }
