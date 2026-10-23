@@ -111,4 +111,16 @@ class Tree {
 			if (currentNode.right !== null) queue.push(currentNode.right);
 		}
 	}
+
+	inOrderForEach(callback, node = this.root) {
+		if (typeof callback !== 'function') {
+			throw new Error('Callback function is required');
+		}
+
+		if (node === null) return;
+
+		this.inOrderForEach(callback, node.left);
+		callback(node.data);
+		this.inOrderForEach(callback, node.right);
+	}
 }
