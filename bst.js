@@ -161,4 +161,42 @@ class Tree {
 
 		return getHeight(targetNode);
 	}
+
+	depth(value) {
+		let currentDepth = 0;
+		let currentNode = this.root;
+
+		while (currentNode !== null) {
+			if (currentNode.data === value) return currentDepth;
+
+			if (value < currentNode.data) {
+				currentNode = currentNode.left;
+			} else {
+				currentNode = currentNode.right;
+			}
+			currentDepth++;
+		}
+
+		return undefined;
+	}
+
+	isBalanced() {
+		const checkBalance = node => {
+			if (node === null) return { height: -1, isBalanced: true };
+
+			const left = checkBalance(node.left);
+			const right = checkBalance(node.right);
+
+			const isSubtreeBalanced =
+				left.isBalanced &&
+				right.isBalanced &&
+				Math.abs(left.height - right.height) <= 1;
+
+			const currentHeight = Math.max(left.height, right.height) + 1;
+
+			return { height: currentHeight, isBalanced: isSubtreeBalanced };
+		};
+
+		return checkBalance(this.root).isBalanced;
+	}
 }
