@@ -199,4 +199,10 @@ class Tree {
 
 		return checkBalance(this.root).isBalanced;
 	}
+
+	rebalance() {
+		const values = [];
+		this.inOrderForEach(val => values.push(val));
+		this.root = this.#buildTree(values);
+	}
 }
